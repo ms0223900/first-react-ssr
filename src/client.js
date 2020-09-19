@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import Routes from './constants/Routes';
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <BrowserRouter>
     {renderRoutes(Routes)}
   </BrowserRouter>,

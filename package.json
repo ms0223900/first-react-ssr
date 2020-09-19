@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.11.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -19,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev:build-server": "set NODE_ENV=development&&webpack --config webpack.server.js --mode=development -w --open",
+    "dev:build-server": "set NODE_ENV=development&&webpack --config webpack.server.js --mode=development -w",
+    "dev:build-client": "set NODE_ENV=development&&webpack --config webpack.client.js --mode=development -w",
     "dev:start": "nodemon ./server-build/index.js",
     "dev": "npm-run-all --parallel build dev:*"
   },

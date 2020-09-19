@@ -1,10 +1,19 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
+import NavBar from './components/Navbar';
 
-const App = ({ route }) => {
+const App = ({ route=null }) => {
+  if(!route) {
+    return (
+      <div>
+        <NavBar />
+      </div>
+    );
+  }
+  
   return (
     <div>
-      {'App Here'}
+      <NavBar />
       {route && renderRoutes(route.routes)}
     </div>
   );

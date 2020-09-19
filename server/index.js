@@ -9,24 +9,40 @@ import renderer from '../src/lib/functions/renderer';
 const PORT = process.env.PORT || 3006;
 const app = express();
 
-app.use(express.static('./build'));
+// app.use(express.static('./build'));
+app.use(express.static('dist'));
+
+export const getHtml = (appHtml='') => (
+  `
+    <html>
+      <head></head>
+      <body>
+        <div id="root">${appHtml}</div>
+        <script src="bundle.js"></script>
+      </body>
+    </html>
+  `
+);
 
 app.get('*', (req, res) => {
+  console.log(req.path);
   const reactApp = renderer(req);
+  console.log(reactApp);
 
-  const indexFile = path.resolve('./build/index.html');
-  fs.readFile(indexFile, {
-    encoding: 'utf-8',
-  }, (err, data) => {
-    if (err) {
-      console.error('Something went wrong:', err);
-      return res.status(500).send('File is not ready yet!');
-    }
-    // console.log(reactApp);
-    return res.send(
-      data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
-    );
-  });
+  // const indexFile = path.resolve('./build/index.html');
+  // fs.readFile(indexFile, {
+  //   encoding: 'utf-8',
+  // }, (err, data) => {
+  //   if (err) {
+  //     console.error('Something went wrong:', err);
+  //     return res.status(500).send('File is not ready yet!');
+  //   };
+  //   return res.send(
+  //     data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
+  //   );
+  // });
+  const appRes = getHtml(reactApp);
+  res.send(appRes);
 });
 
 app.listen(PORT, () => {
