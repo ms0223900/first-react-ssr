@@ -1,21 +1,22 @@
-import React from 'react'
-import ReactDOMServer from 'react-dom/server'
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import path from 'path';
 import fs from 'fs';
 import express from 'express';
-import App from '../src/App'
+import App from '../src/App';
 
 const PORT = process.env.PORT || 3006;
-const app = express()
+const app = express();
 
 const ROUTES = {
   homepage: '/'
-}
+};
+
 
 app.get(ROUTES.homepage, (req, res) => {
-  const reactApp = ReactDOMServer.renderToString(<App />)
+  const reactApp = ReactDOMServer.renderToString(<App />);
 
-  const indexFile = path.resolve('./build/index.html')
+  const indexFile = path.resolve('./build/index.html');
   fs.readFile(indexFile, {
     encoding: 'utf-8',
   }, (err, data) => {
@@ -27,11 +28,12 @@ app.get(ROUTES.homepage, (req, res) => {
     return res.send(
       data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
     );
-  })
-})
+  });
+});
 
-app.use(express.static('./build'))
+
+app.use(express.static('./build'));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
-})
+});
