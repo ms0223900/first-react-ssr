@@ -4,17 +4,15 @@ import path from 'path';
 import fs from 'fs';
 import express from 'express';
 import App from '../src/App';
+import renderer from '../src/lib/functions/renderer';
 
 const PORT = process.env.PORT || 3006;
 const app = express();
 
-const ROUTES = {
-  homepage: '/'
-};
+app.use(express.static('./build'));
 
-
-app.get(ROUTES.homepage, (req, res) => {
-  const reactApp = ReactDOMServer.renderToString(<App />);
+app.get('*', (req, res) => {
+  const reactApp = renderer(req);
 
   const indexFile = path.resolve('./build/index.html');
   fs.readFile(indexFile, {
@@ -22,17 +20,14 @@ app.get(ROUTES.homepage, (req, res) => {
   }, (err, data) => {
     if (err) {
       console.error('Something went wrong:', err);
-      return res.status(500).send('Oops, better luck next time!');
+      return res.status(500).send('File is not ready yet!');
     }
-
+    // console.log(reactApp);
     return res.send(
       data.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
     );
   });
 });
-
-
-app.use(express.static('./build'));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

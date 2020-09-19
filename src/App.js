@@ -1,15 +1,13 @@
 import React from 'react';
-import Counter from './components/Counter';
+import { renderRoutes } from 'react-router-config';
 
-function App() {
+const App = ({ route }) => {
   return (
-    <div className="App">
-      <h2>
-        {'Hi, first SSR!AABDDD!!'}
-        <Counter />
-      </h2>
+    <div>
+      {'App Here'}
+      {route && renderRoutes(route.routes)}
     </div>
   );
-}
+};
 
-export default App;
+export default { component: App, };
