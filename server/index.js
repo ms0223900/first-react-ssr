@@ -9,6 +9,7 @@ import renderer from '../src/lib/functions/renderer';
 const PORT = process.env.PORT || 3006;
 const app = express();
 
+// 可以取消註解這邊來看如果直接使用build的檔案會發生什麼事
 // app.use(express.static('./build'));
 app.use(express.static('dist'));
 
@@ -29,6 +30,7 @@ app.get('*', (req, res) => {
   const reactApp = renderer(req);
   console.log(reactApp);
 
+  // 可以取消註解這邊來看如果直接使用build的檔案會發生什麼事
   // const indexFile = path.resolve('./build/index.html');
   // fs.readFile(indexFile, {
   //   encoding: 'utf-8',
